@@ -1,0 +1,337 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void task1() {
+    int num;
+    printf("Введите число: ");
+    scanf("%d", &num);
+    printf("Вы ввели: %d\n", num);
+}
+
+void task2() {
+    int num1, num2;
+    printf("Введите два числа: ");
+    scanf("%d %d", &num1, &num2);
+    printf("Сумма: %d\n", num1 + num2);
+    printf("Разность: %d\n", num1 - num2);
+    printf("Произведение: %d\n", num1 * num2);
+    printf("Частное: %.2f\n", (float)num1 / num2);
+}
+
+void task3() {
+    int num1, num2, num3;
+    printf("Введите три числа: ");
+    scanf("%d %d %d", &num1, &num2, &num3);
+    printf("Среднее арифметическое: %.2f\n", (float)(num1 + num2 + num3) / 3);
+}
+
+void task4() {
+    char name[50];
+    printf("Введите ваше имя: ");
+    scanf("%s", name);
+    printf("Привет, %s!\n", name);
+}
+
+void task5() {
+    int year, age;
+    printf("Введите год вашего рождения: ");
+    scanf("%d", &year);
+    age = 2024 - year;
+    printf("Ваш возраст: %d\n", age);
+}
+
+void task6() {
+    int num;
+    printf("Введите число: ");
+    scanf("%d", &num);
+    if (num % 2 == 0) {
+        printf("Число четное.\n");
+    } else {
+        printf("Число нечетное.\n");
+    }
+}
+
+void task7() {
+    int num;
+    printf("Введите число: ");
+    scanf("%d", &num);
+    if (num > 0) {
+        printf("Число положительное.\n");
+    } else if (num < 0) {
+        printf("Число отрицательное.\n");
+    } else {
+        printf("Число равно нулю.\n");
+    }
+}
+
+void task8() {
+    int num;
+    printf("Введите число: ");
+    scanf("%d", &num);
+    if (num % 3 == 0) {
+        printf("Число кратно 3.\n");
+    } else {
+        printf("Число не кратно 3.\n");
+    }
+}
+
+void task9() {
+    int num1, num2;
+    printf("Введите два числа: ");
+    scanf("%d %d", &num1, &num2);
+    if (num1 > num2) {
+        printf("Большее число: %d\n", num1);
+    } else {
+        printf("Большее число: %d\n", num2);
+    }
+}
+
+void task10() {
+    int num1, num2;
+    printf("Введите два числа: ");
+    scanf("%d %d", &num1, &num2);
+    if (num1 == num2) {
+        printf("Числа равны.\n");
+    } else {
+        printf("Числа не равны.\n");
+    }
+}
+
+void task11() {
+    for (int i = 1; i <= 10; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+}
+
+void task12() {
+    int i = 1;
+    while (i <= 10) {
+        printf("5 * %d = %d\n", i, 5 * i);
+        i++;
+    }
+}
+
+void task13() {
+    int sum = 0;
+    for (int i = 1; i <= 100; i++) {
+        sum += i;
+    }
+    printf("Сумма чисел от 1 до 100: %d\n", sum);
+}
+
+void task14() {
+    for (int i = 1; i <= 100; i++) {
+        if (i % 3 == 0 || i % 5 == 0) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+}
+
+void task15() {
+    int num;
+    printf("Введите число: ");
+    scanf("%d", &num);
+    printf("Делители числа %d: ", num);
+    for (int i = 1; i <= num; i++) {
+        if (num % i == 0) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+}
+
+void task16() {
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void task17() {
+    int arr[10];
+    srand(time(NULL));
+    for (int i = 0; i < 10; i++) {
+        arr[i] = rand() % 100;
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void task18() {
+    int arr[10];
+    printf("Введите 10 чисел:\n");
+    for (int i = 0; i < 10; i++) {
+        scanf("%d", &arr[i]);
+    }
+    printf("Массив: ");
+    for (int i = 0; i < 10; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void task19() {
+    int arr[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int sum = 0;
+    for (int i = 0; i < 10; i++) {
+        sum += arr[i];
+    }
+    printf("Сумма элементов массива: %d\n", sum);
+}
+
+void task20() {
+    int arr1[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int arr2[10] = {10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+    int sumArr[10];
+    printf("Сумма массивов: ");
+    for (int i = 0; i < 10; i++) {
+        sumArr[i] = arr1[i] + arr2[i];
+        printf("%d ", sumArr[i]);
+    }
+    printf("\n");
+}
+
+int factorial(int n) {
+    if (n == 0 || n == 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+void task21() {
+    int num;
+    printf("Введите число для вычисления факториала: ");
+    scanf("%d", &num);
+    printf("Факториал числа %d: %d\n", num, factorial(num));
+}
+
+int isPrime(int n) {
+    if (n <= 1) {
+        return 0;
+    }
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void task22() {
+    int num;
+    printf("Введите число для проверки на простоту: ");
+    scanf("%d", &num);
+    if (isPrime(num)) {
+        printf("Число %d является простым.\n", num);
+    } else {
+        printf("Число %d не является простым.\n", num);
+    }
+}
+
+void printDivisors(int n) {
+    printf("Делители числа %d: ", n);
+    for (int i = 1; i <= n; i++) {
+        if (n % i == 0) {
+            printf("%d ", i);
+        }
+    }
+    printf("\n");
+}
+
+void task23() {
+    int num;
+    printf("Введите число для вывода делителей: ");
+    scanf("%d", &num);
+    printDivisors(num);
+}
+
+void printNumbersBetween(int a, int b) {
+    if (a > b) {
+        int temp = a;
+        a = b;
+        b = temp;
+    }
+    for (int i = a + 1; i < b; i++) {
+        printf("%d ", i);
+    }
+    printf("\n");
+}
+
+void task24() {
+    int num1, num2;
+    printf("Введите два числа: ");
+    scanf("%d %d", &num1, &num2);
+    printf("Числа между %d и %d: ", num1, num2);
+    printNumbersBetween(num1, num2);
+}
+
+int sumDivisors(int n) {
+    int sum = 1;
+    for (int i = 2; i * i <= n; i++) {
+        if (n % i == 0) {
+            sum += i;
+            if (i * i != n) {
+                sum += n / i;
+            }
+        }
+    }
+    return sum;
+}
+
+int areAmicable(int a, int b) {
+    return (sumDivisors(a) == b && sumDivisors(b) == a);
+}
+
+void task25() {
+    int num1, num2;
+    printf("Введите два числа для проверки на дружественность: ");
+    scanf("%d %d", &num1, &num2);
+    if (areAmicable(num1, num2)) {
+        printf("Числа %d и %d являются дружественными.\n", num1, num2);
+    } else {
+        printf("Числа %d и %d не являются дружественными.\n", num1, num2);
+    }
+}
+
+int main() {
+    printf("Задачи на ввод и вывод данных:\n");
+    task1();
+    task2();
+    task3();
+    task4();
+    task5();
+
+    printf("\nЗадачи на условные операторы:\n");
+    task6();
+    task7();
+    task8();
+    task9();
+    task10();
+
+    printf("\nЗадачи на циклы:\n");
+    task11();
+    task12();
+    task13();
+    task14();
+    task15();
+
+    printf("\nЗадачи на массивы:\n");
+    task16();
+    task17();
+    task18();
+    task19();
+    task20();
+
+    printf("\nЗадачи на функции:\n");
+    task21();
+    task22();
+    task23();
+    task24();
+    task25();
+
+    return 0;
+}
