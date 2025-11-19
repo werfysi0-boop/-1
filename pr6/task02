@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/stat.h>
+
+int main() {
+    FILE *source;
+    time_t rawtime;
+    struct tm *timeinfo;
+    char filename[100];
+    char command[200];
+    
+    mkdir("archive", 0755);
+    
+    while(1) {
+        sleep(5);
+        
+        source = fopen("log.txt", "r");
+        if (source == NULL) {
+            continue;
+        }
+        
+        time(&rawtime);
+        timeinfo = localtime(&rawtime);
+        snprintf(filename, sizeof(filename), 
+                "archive/log_%04d%02d%02d_%02d%02d%02d.gz",
+                timeinfo->tm_year + 1900, timeinfo->tm_mon + 1, timeinfo->tm_mday,
+                timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+        
+        fclose(source);
+        
+        snprintf(command, sizeof(command), "gzip -c log.txt > %s", filename);
+        system(command);
+        
+        source = fopen("log.txt", "w");
+        if (source != NULL) {
+            fclose(source);
+        }
+        
+        printf("Файл заархивирован: %s\n", filename);
+    }
+    
+    return 0;
+}
