@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
+#include <grp.h>
+
+void check_access(const char* filename, const char* username) {
+    struct passwd *pw = getpwnam(username);
+    if (pw == NULL) {
+        printf("Пользователь %s не найден\n", username);
+        return;
+    }
+    
+    setuid(pw->pw_uid);
+    
+    printf("Проверка для пользователя: %s\n", username);
+    
+    if (access(filename, R_OK) == 0) {
+        printf("  - Чтение: разрешено\n");
+    } else {
+        printf("  - Чтение: запрещено\n");
+    }
+    
+    if (access(filename, W_OK) == 0) {
+        printf("  - Запись: разрешено\n");
+    } else {
+        printf("  - Запись: запрещено\n");
+    }
+    
+    printf("\n");
+}
+
+int main() {
+    const char* filename = "/home/admin/test_file.txt";
+    
+    printf("Проверка прав доступа к файлу: %s\n\n", filename);
+    
+    check_access(filename, "User1");
+    check_access(filename, "User2");
+    check_access(filename, "User3");
+    
+    return 0;
+}
+sudo groupadd Group1
+sudo useradd -m -G Group1 User1
+sudo useradd -m -G Group1 User2
+sudo useradd -m User3
+sudo touch /home/admin/test_file.txt
+sudo echo "Это тестовый файл" | sudo tee /home/admin/test_file.txt
+sudo chown admin:Group1 /home/admin/test_file.txt
+sudo chmod 664 /home/admin/test_file.txt
+gcc -o check_permissions check_permissions.c
+sudo ./check_permissions
+
