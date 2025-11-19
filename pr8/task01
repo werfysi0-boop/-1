@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+
+#define BUFFER_SIZE 1024
+
+int main() {
+    char filename[100];
+    char search_string[100];
+    char buffer[BUFFER_SIZE];
+    int fd;
+    ssize_t bytes_read;
+    int line_number = 1;
+    int found = 0;
+    char line[BUFFER_SIZE];
+    int line_pos = 0;
+
+    printf("Введите имя файла: ");
+    scanf("%99s", filename);
+    printf("Введите строку для поиска: ");
+    scanf("%99s", search_string);
+
+    fd = open(filename, O_RDONLY);
+    if (fd == -1) {
+        perror("Ошибка открытия файла");
+        return 1;
+    }
+
+    printf("Строки, содержащие '%s':\n", search_string);
+
+    while ((bytes_read = read(fd, buffer, BUFFER_SIZE)) > 0) {
+        for (ssize_t i = 0; i < bytes_read; i++) {
+            if (buffer[i] == '\n') {
+                line[line_pos] = '\0';
+                if (strstr(line, search_string) != NULL) {
+                    printf("%d: %s\n", line_number, line);
+                    found = 1;
+                }
+                line_number++;
+                line_pos = 0;
+            } else {
+                if (line_pos < BUFFER_SIZE - 1) {
+                    line[line_pos++] = buffer[i];
+                }
+            }
+        }
+    }
+
+    if (line_pos > 0) {
+        line[line_pos] = '\0';
+        if (strstr(line, search_string) != NULL) {
+            printf("%d: %s\n", line_number, line);
+            found = 1;
+        }
+    }
+
+    if (!found) {
+        printf("Строки, содержащие '%s', не найдены.\n", search_string);
+    }
+
+    close(fd);
+    return 0;
+}
