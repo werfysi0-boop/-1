@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LINE 1000
+
+void program1() {
+    char line[MAX_LINE];
+    char date[] = "03.05.2024";
+    int date_len = strlen(date);
+    
+    while (fgets(line, MAX_LINE, stdin)) {
+        if (strncmp(line, date, date_len) == 0) {
+            printf("%s", line);
+        }
+    }
+}
+
+void program2() {
+    char line[MAX_LINE];
+    
+    while (fgets(line, MAX_LINE, stdin)) {
+        int word_count = 0;
+        int in_word = 0;
+        
+        for (int i = 0; line[i] != '\0'; i++) {
+            if (isspace(line[i])) {
+                in_word = 0;
+            } else if (!in_word) {
+                word_count++;
+                in_word = 1;
+            }
+        }
+        
+        line[strcspn(line, "\n")] = '\0';
+        printf("%s %d\n", line, word_count);
+    }
+}
+
+void program3() {
+    char ch;
+    int digit_count = 0;
+    
+    while ((ch = getchar()) != EOF) {
+        if (isdigit(ch)) {
+            digit_count++;
+        }
+    }
+    
+    printf("%d\n", digit_count);
+}
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Использование: %s <1|2|3>\n", argv[0]);
+        return 1;
+    }
+    
+    int program_num = atoi(argv[1]);
+    
+    switch (program_num) {
+        case 1:
+            program1();
+            break;
+        case 2:
+            program2();
+            break;
+        case 3:
+            program3();
+            break;
+        default:
+            fprintf(stderr, "Неверный номер программы. Допустимо: 1, 2, 3\n");
+            return 1;
+    }
+    
+    return 0;
+}
+gcc -o programs programs.c
+./programs 1 < input.txt > temp1.txt
+./programs 2 < temp1.txt > temp2.txt
+./programs 3 < temp2.txt
