@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <time.h>
+#include <unistd.h>
+
+int main() {
+    FILE *file;
+    time_t rawtime;
+    struct tm *timeinfo;
+    
+    while(1) {
+        file = fopen("log.txt", "a");
+        if (file == NULL) {
+            perror("Ошибка открытия файла");
+            return 1;
+        }
+        
+        time(&rawtime);
+        timeinfo = localtime(&rawtime);
+        fprintf(file, "[%02d:%02d:%02d] Запись лога\n", 
+                timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+        
+        fclose(file);
+        sleep(1);
+    }
+    
+    return 0;
+}
