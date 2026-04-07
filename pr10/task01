@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define COUNT 10
+#define MAX_NAME 50
+
+typedef struct {
+    char name[MAX_NAME];
+    int id;
+} Student;
+
+int main() {
+    Student students[COUNT];
+    FILE *file;
+    int i;
+
+    file = fopen("students.txt", "r");
+    if (file == NULL) {
+        printf("Ошибка: Не удалось открыть файл students.txt\n");
+        return 1;
+    }
+
+    for (i = 0; i < COUNT; i++) {
+        if (fscanf(file, "%s %d", students[i].name, &students[i].id) != 2) {
+            printf("Ошибка чтения строки %d\n", i + 1);
+            break;
+        }
+    }
+    fclose(file);
+
+    file = fopen("output_students.txt", "w");
+    if (file == NULL) {
+        printf("Ошибка: Не удалось создать файл output_students.txt\n");
+        return 1;
+    }
+
+    for (i = 0; i < COUNT; i++) {
+        fprintf(file, "Студент: %s, ID: %d\n", students[i].name, students[i].id);
+    }
+    fclose(file);
+    printf("Данные успешно сохранены в output_students.txt\n\n");
+
+    printf("Вывод с ограничением (только первые 6 записей), согласно заданию 4:\n");
+    int available_count = 0;
+    
+    for (i = 0; i < COUNT; i++) {
+        if (i >= 6) {
+            continue; 
+        }
+        printf("%d. %s - %d\n", i + 1, students[i].name, students[i].id);
+        available_count++;
+    }
+    printf("Количество доступных записей: %d\n\n", available_count);
+
+
+    printf("Вывод с изменением доступа (первые 6 + последняя), согласно зада\n");
+    available_count = 0;
+
+    for (i = 0; i < COUNT; i++) {
+        if (i >= 6 && i != 9) {
+            continue;
+        }
+
+        printf("%d. %s - %d\n", i + 1, students[i].name, students[i].id);
+        available_count++;
+    }
+
+    printf("Количество доступных записей: %d\n", available_count);
+
+    return 0;
+} 
